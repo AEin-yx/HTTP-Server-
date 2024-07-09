@@ -23,19 +23,19 @@ This Project is based on creating a "http server using c++ on windows systems" a
 ## Prerequisites
 Some Prerequisites to understand websocket programming.
 Lets start with why are we even learning socket programming and what is socket and why we need it?
+
 What is socket?
 There are programs in a computer running and they depend on each other to get the task done for task like facilitating communication and coordination between separate processes.This processes are called InterProcessCommunication and to ensure that they talk with each other we use sockets which are basically "pipes which can send and recieve data" or say "a way to speak to other programs using standard Unix file descriptors" for unix systems and for windows we use handles and the underlying structure is different from unix systems.
 
-file descriptors?They are like an integer associated with any unix files, yes everything in unix is a file or so.The file descriptor for network communication can be found using the system routine socket().
+File descriptors?They are like an integer associated with any unix files, yes everything in unix is a file or so.The file descriptor for network communication can be found using the system routine socket().
 ##For Unix Systems
 For Internet Sockets we have two sockets, 
 1.Stream socket  (SOCK_STREAM)
 2.DataGram socket (SOCK_DGRAM)
 ##For Windows System
+
 1.Winsock
-
 When we put 1,2 as input in one end of the pipe we get 1,2 in same orderly fashion.How do stream socket are so reliable in data transmission quality.
-
 You may have heard the famous protocol pair of TCP/IP which most of the internet uses.Guess what,The protocol of stream socket is TCP/IP.
 
 Who uses DGRAM?
@@ -105,7 +105,7 @@ WSAStartup is a function and load the dll because socket management are repetiti
 ```
 WSData Structure
 The WSADATA structure contains information about the Windows Sockets implementation.
-typedef struct WSAData {
+```typedef struct WSAData {
         WORD wVersion;
         WORD wHighVersion;
         char szDescription [WSADESCRIPTION_LEN+1];
@@ -114,11 +114,11 @@ typedef struct WSAData {
         unsigned short iMaxUdpDg;
         char FAR *IpVendorInfo;
 }
-
+```
 The WSAStartup function returns a pointer to the WSADATA structure in the IpWSAData parameter
 
 An Example of the above functions to show if dll is found or not:
-
+```
 WSADATA wsaData;
 int wsaerr;
 WORD wVersion Requested = MAKEWORD(2, 2);
@@ -131,6 +131,7 @@ else{
     cout << "The Winsock dll was found!" << endl;
     cout<<"The Status:"<<wsaData.szSystemStatus<<endl;
 }
+```
 Server function protocol:TCP
 1.Socket
 Socket
@@ -143,7 +144,7 @@ protocol: The protocol to be used (IPPROTO_TCP for TCP).
 if the output was 0, we have a socket.
 
 After closing socket we do a cleanup,
-
+```
 SOCKET serverSocket = INVALID_SOCKET;
 serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 if (serverSocket== INVALID_SOCKET){
@@ -155,19 +156,19 @@ else {
 }
 //...
 WSACleanup();
-
+```
 How to actually close a socket?
 Close Socket
 Closes the socket passed as an argument
 The socket must have previously been opened through a call to socket
-
+```
 int closesocket(Socket s);
 SOCKET serverSocket;
 serverSocket = INVALID_SOCKET; 
 serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 //... Process socket
 closesocket(serverSocket);
-
+```
 
 ## Testing the Server
 Guidance on testing the server to ensure it works as expected.
